@@ -1,5 +1,5 @@
 Param (
-    [string]$AdminUsername = "LabUser",
+    [string]$AdminUsername = "azureadmin",
     [string]$AdminPassword = "",
     [string]$DVMIP = ""
 )
@@ -158,12 +158,12 @@ function Clone-LabRepository {
 
     $gitPath = "C:\Program Files\Git\bin\git.exe"
     if (Test-Path $gitPath) {
-        & $gitPath clone "https://github.com/<YOUR-ORG>/data-extraction-using-azure-content-understanding.git" "$labFilesPath\data-extraction-using-azure-content-understanding"
+        & $gitPath clone "https://github.com/KIRANGOWDAT/data-extraction-using-azure-content-understanding.git" "$labFilesPath\data-extraction-using-azure-content-understanding"
         Write-Log "Repository cloned to $labFilesPath."
     }
     else {
         Write-Log "WARNING: Git not found at $gitPath. Retrying with PATH..."
-        git clone "https://github.com/<YOUR-ORG>/data-extraction-using-azure-content-understanding.git" "$labFilesPath\data-extraction-using-azure-content-understanding"
+        git clone "https://github.com/KIRANGOWDAT/data-extraction-using-azure-content-understanding.git" "$labFilesPath\data-extraction-using-azure-content-understanding"
     }
 }
 
