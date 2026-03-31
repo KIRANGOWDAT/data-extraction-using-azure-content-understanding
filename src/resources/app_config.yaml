@@ -1,0 +1,126 @@
+local:
+  key_vault_uri: "https://your-keyvault-name.vault.azure.net/"
+  tenant_id: "your-tenant-id"
+  user_managed_identity:
+    client_id:
+      value: "your-user-managed-identity-client-id"
+  cosmosdb:
+    db_name:
+      value: "data-extraction-db"
+    endpoint:
+      key: "cosmosdb-connection-string"
+      type: "secret"
+    configuration_collection_name:
+      value: "Configurations"
+    document_collection_name:
+      value: "Documents"
+  llm:
+    model_name:
+      value: "gpt-4o"
+    endpoint:
+      value: "https://your-openai-resource.openai.azure.com/openai/deployments/gpt-4o"
+    access_key:
+      key: "open-ai-key"
+      type: "secret"
+    api_version:
+      value: "2025-04-01-preview"
+  content_understanding:
+    endpoint:
+      value: "https://your-content-understanding-resource.cognitiveservices.azure.com/"
+    subscription_key:
+      key: "ai-foundry-key"
+      type: "secret"
+    request_timeout:
+      value: 30
+    project_id:
+      value: "your-ai-project-id"
+  default_ingest_config:
+    name:
+      value: document-extraction
+    version:
+      value: v1.0
+  chat_history:
+    endpoint:
+      value: "https://your-cosmos-kb-resource.documents.azure.com:443/"
+    db_name:
+      value: "knowledge-base-db"
+    chat_history_container_name:
+      value: "chat-history"
+    user_message_limit:
+      value: 20
+    domain:
+      value: "Data Extraction AI"
+  blob_storage:
+    account_url:
+      value: "https://your-storage-account.blob.core.windows.net/"
+    container_name:
+      value: "processed"
+
+
+dev:
+  key_vault_uri: "https://your-keyvault-name.vault.azure.net/"
+  tenant_id: "your-tenant-id"
+  user_managed_identity:
+    client_id:
+      value: "your-user-managed-identity-client-id"
+  cosmosdb:
+    db_name:
+      value: "data-extraction-db"
+    endpoint:
+      key: "cosmosdb-connection-string"
+      type: "secret"
+    configuration_collection_name:
+      value: "Configurations"
+    document_collection_name:
+      value: "Documents"
+  llm:
+    model_name:
+      value: "gpt-4o"
+    endpoint:
+      value: "https://your-openai-resource.openai.azure.com/openai/deployments/gpt-4o"
+    access_key:
+      key: "open-ai-key"
+      type: "secret"
+    api_version:
+      value: "2025-04-01-preview"
+  content_understanding:
+    endpoint:
+      value: "https://your-content-understanding-resource.cognitiveservices.azure.com/"
+    subscription_key:
+      key: "ai-foundry-key"
+      type: "secret"
+    request_timeout:
+      value: 30
+    project_id:
+      value: "your-ai-project-id"
+  default_ingest_config:
+    name:
+      value: document-extraction
+    version:
+      value: v1.0
+  chat_history:
+    endpoint:
+      value: "https://your-cosmos-kb-resource.documents.azure.com:443/"
+    db_name:
+      value: "knowledge-base-db"
+    chat_history_container_name:
+      value: "chat-history"
+    user_message_limit:
+      value: 20
+    domain:
+      value: "Data Extraction AI"
+  blob_storage:
+    account_url:
+      value: "https://your-storage-account.blob.core.windows.net/"
+    container_name:
+      value: "processed"
+
+
+# TODO: Update later
+# uat:
+#   user_managed_identity_client_id: ""
+#   ...
+#
+# prod:
+#   user_managed_identity_client_id: ""
+#   ...

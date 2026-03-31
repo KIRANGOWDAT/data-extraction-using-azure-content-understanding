@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "adminUsername": {
+      "value": "LabUser"
+    },
+    "adminPassword": {
+      "value": "YOURPASSWORD-WILL-BE-REPLACED-BY-CLOUDLABS"
+    },
+    "vmSize": {
+      "value": "Standard_D4s_v3"
+    },
+    "deploymentId": {
+      "value": "GEN-UNIQUE"
+    },
+    "trainerUserName": {
+      "value": ""
+    },
+    "trainerUserPassword": {
+      "value": ""
+    },
+    "DVMIP": {
+      "value": ""
+    },
+    "installscriptsUri": {
+      "value": "https://raw.githubusercontent.com/<YOUR-ORG>/data-extraction-using-azure-content-understanding/main/cloudlabs-setup/"
+    }
+  }
+}
