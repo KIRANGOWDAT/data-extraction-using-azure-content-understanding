@@ -12,7 +12,7 @@
 
     - Task 1: Verify lab environment prerequisites
 
-    - Task 2: Clone the repository and explore the project structure
+    - Task 2: Explore the project structure
 
     - Task 3: Review the solution architecture
 
@@ -52,108 +52,38 @@ Before we dive into building the solution, let's ensure your lab environment has
 
 ## Task 1: Verify lab environment prerequisites
 
-In this task, you will confirm that all required tools are installed and accessible on your lab virtual machine.
+In this task, you will run a validation script to confirm that all required tools are installed and accessible on your lab virtual machine.
 
-1. Open **Windows Terminal** from the taskbar or by pressing **Windows + X** and selecting **Terminal**.
+1. On your lab VM desktop, locate and right-click the **Validate-LabSetup.ps1** file. Select **Run with PowerShell**.
 
     ![](../media/Lab-01/image02.png)
 
-2. Verify that **Python 3.12** or later is installed by running the following command:
+2. The script will automatically check all required tools and display the results. Verify that every item shows **[PASS]** status:
 
-    ```
-    python --version
-    ```
-
-    You should see output similar to `Python 3.12.x`.
+    | Tool | Required Version |
+    |---|---|
+    | Python | 3.12 or later |
+    | Azure CLI | 2.60 or later |
+    | Terraform | 1.5.0 or later |
+    | Azure Functions Core Tools | v4.x |
+    | Git | Any |
+    | Node.js | 18.x or later |
+    | VS Code | Any |
+    | Lab Repository | Present at `C:\LabFiles` |
 
     ![](../media/Lab-01/image03.png)
 
-3. Verify that **Azure CLI** is installed by running:
+>**Note:** If any item shows **[FAIL]**, contact your lab administrator. All tools should be pre-installed on your lab VM.
 
-    ```
-    az --version
-    ```
+## Task 2: Explore the project structure
 
-    Confirm that the output shows `azure-cli` version **2.60** or later.
+In this task, you will open the pre-cloned repository and understand how the codebase is organized.
+
+1. On the desktop, double-click the **Visual Studio Code** shortcut. It will open directly into the lab repository at `C:\LabFiles\data-extraction-using-azure-content-understanding`.
 
     ![](../media/Lab-01/image04.png)
 
-4. Verify that **Terraform** is installed by running:
-
-    ```
-    terraform --version
-    ```
-
-    You should see output showing Terraform version **1.5.0** or later.
-
-    ![](../media/Lab-01/image05.png)
-
-5. Verify that **Azure Functions Core Tools** version 4 is installed by running:
-
-    ```
-    func --version
-    ```
-
-    You should see output showing version **4.x**.
-
-    ![](../media/Lab-01/image06.png)
-
-6. Verify that **Git** is installed by running:
-
-    ```
-    git --version
-    ```
-
-    ![](../media/Lab-01/image07.png)
-
-7. Verify that **Node.js 18** is installed (required by the Azure Functions host):
-
-    ```
-    node --version
-    ```
-
-    You should see output showing version **18.x** or later.
-
-    ![](../media/Lab-01/image08.png)
-
-8. Open **Visual Studio Code** from the desktop shortcut or by typing `code` in the terminal. Verify that the following extensions are installed by navigating to the **Extensions** panel (**Ctrl+Shift+X**):
-
-    - **Python** (Microsoft)
-    - **Azure Functions** (Microsoft)
-    - **REST Client** (Humao)
-
-    ![](../media/Lab-01/image09.png)
-
->**Note:** If any of the above tools are missing, contact your lab administrator. All tools should be pre-installed on your lab VM.
-
-## Task 2: Clone the repository and explore the project structure
-
-In this task, you will clone the sample repository and understand how the codebase is organized.
-
-1. In the terminal, navigate to the desktop and clone the repository:
-
-    ```
-    cd C:\Users\LabUser\Desktop
-    git clone https://github.com/Azure-Samples/data-extraction-using-azure-content-understanding.git
-    ```
-
-    ![](../media/Lab-01/image10.png)
-
-2. Navigate into the cloned repository folder:
-
-    ```
-    cd data-extraction-using-azure-content-understanding
-    ```
-
-3. Open the project in **Visual Studio Code**:
-
-    ```
-    code .
-    ```
-
-    ![](../media/Lab-01/image11.png)
-
-4. In the VS Code **Explorer** panel, review the top-level folder structure. The project is organized as follows:
+2. In the VS Code **Explorer** panel, review the top-level folder structure. The project is organized as follows:
 
     | Folder/File | Purpose |
     |---|---|
@@ -166,9 +96,9 @@ In this task, you will clone the sample repository and understand how the codeba
     | `deploy.sh` | One-click deployment script for Azure Cloud Shell |
     | `requirements.txt` | Python package dependencies |
 
-    ![](../media/Lab-01/image12.png)
+    ![](../media/Lab-01/image05.png)
 
-5. Expand the **src/** folder to examine the application code structure:
+3. Expand the **src/** folder to examine the application code structure:
 
     | Subfolder | Purpose |
     |---|---|
@@ -181,9 +111,9 @@ In this task, you will clone the sample repository and understand how the codeba
     | `services/` | Business logic (CU client, Cosmos DB, LLM manager, blob storage) |
     | `utils/` | Utility functions (citation cleaner, monitoring, singleton) |
 
-    ![](../media/Lab-01/image13.png)
+    ![](../media/Lab-01/image06.png)
 
-6. Expand the **iac/** folder. Notice the modular Terraform structure:
+4. Expand the **iac/** folder. Notice the modular Terraform structure:
 
     | Module | Azure Resource |
     |---|---|
@@ -196,7 +126,7 @@ In this task, you will clone the sample repository and understand how the codeba
     | `modules/azure_openai/` | Azure OpenAI deployment (gpt-4o) |
     | `modules/appinsights/` | Application Insights |
 
-    ![](../media/Lab-01/image14.png)
+    ![](../media/Lab-01/image07.png)
 
 ## Task 3: Review the solution architecture
 
@@ -204,7 +134,7 @@ In this task, you will study the architecture diagram and understand the three c
 
 1. In VS Code, open the file **docs/architecture.md**.
 
-    ![](../media/Lab-01/image15.png)
+    ![](../media/Lab-01/image08.png)
 
 2. Scroll to the top and review the **architecture diagram**. The solution implements three main workflows:
 
@@ -214,7 +144,7 @@ In this task, you will study the architecture diagram and understand the three c
 
     - **Document Ingestion** — PDF documents are submitted to the system. Azure Content Understanding extracts structured fields (with bounding boxes and confidence scores), and the results are stored in Cosmos DB.
 
-    ![](../media/Lab-01/image16.png)
+    ![](../media/Lab-01/image09.png)
 
 3. Review the **Document Enquiry Workflow** sequence diagram. This flow shows how:
 
@@ -256,7 +186,7 @@ In this task, you will learn the key concepts of Azure Content Understanding tha
 
 1. In VS Code, open the file **docs/design/decisions/content-undestanding-vs-mllm-docint.md**. This architecture decision record (ADR) explains why Azure Content Understanding was chosen over alternatives.
 
-    ![](../media/Lab-01/image17.png)
+    ![](../media/Lab-01/image10.png)
 
 2. Review the key advantages of Azure Content Understanding:
 
@@ -302,7 +232,7 @@ In this task, you will learn the key concepts of Azure Content Understanding tha
     }
     ```
 
-    ![](../media/Lab-01/image18.png)
+    ![](../media/Lab-01/image11.png)
 
 4. Notice the structure:
 
@@ -314,7 +244,7 @@ In this task, you will learn the key concepts of Azure Content Understanding tha
 
 5. Open the file **document_samples/** folder. Notice the sample PDF — **Agreement_for_leasing_or_renting_certain_Microsoft_Software_Products.pdf**. This is the lease agreement document that you will ingest and query in later labs.
 
-    ![](../media/Lab-01/image19.png)
+    ![](../media/Lab-01/image12.png)
 
 >**Note:** In a production scenario, you would have hundreds or thousands of such documents being ingested automatically via blob storage triggers.
 
