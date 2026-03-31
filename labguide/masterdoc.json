@@ -1,0 +1,74 @@
+{
+  "Name": "Data Extraction Using Azure Content Understanding",
+  "Language": "English",
+  "Labs": [
+    {
+      "Number": 1,
+      "FileName": "Lab-01.md",
+      "Title": "Lab 01 - Environment Setup and Architecture Overview",
+      "Description": "Verify lab prerequisites, clone the repository, explore project structure, review the three-workflow architecture, and understand Azure Content Understanding concepts.",
+      "Duration": 45,
+      "Url": "https://github.com/Azure-Samples/data-extraction-using-azure-content-understanding",
+      "Type": "Lab"
+    },
+    {
+      "Number": 2,
+      "FileName": "Lab-02.md",
+      "Title": "Lab 02 - Deploying Azure Infrastructure with Terraform",
+      "Description": "Authenticate with Azure CLI, configure Terraform variables, deploy the complete Azure infrastructure, and verify all resources in the Azure Portal.",
+      "Duration": 75,
+      "Url": "https://github.com/Azure-Samples/data-extraction-using-azure-content-understanding",
+      "Type": "Lab"
+    },
+    {
+      "Number": 3,
+      "FileName": "Lab-03.md",
+      "Title": "Lab 03 - Configuring the Application",
+      "Description": "Configure Azure Functions local settings, update app_config.yaml with Azure endpoints, install dependencies, start the Function App, and verify health checks.",
+      "Duration": 60,
+      "Url": "https://github.com/Azure-Samples/data-extraction-using-azure-content-understanding",
+      "Type": "Lab"
+    },
+    {
+      "Number": 4,
+      "FileName": "Lab-04.md",
+      "Title": "Lab 04 - Document Extraction Configuration and Ingestion",
+      "Description": "Upload extraction configurations, create CU analyzers, ingest a sample lease agreement, and explore extracted fields with bounding boxes and confidence scores.",
+      "Duration": 75,
+      "Url": "https://github.com/Azure-Samples/data-extraction-using-azure-content-understanding",
+      "Type": "Lab"
+    },
+    {
+      "Number": 5,
+      "FileName": "Lab-05.md",
+      "Title": "Lab 05 - Querying Documents and Deploying to Azure",
+      "Description": "Query documents with natural language, explore citations and chat history, deploy to Azure, and monitor with Application Insights.",
+      "Duration": 75,
+      "Url": "https://github.com/Azure-Samples/data-extraction-using-azure-content-understanding",
+      "Type": "Lab"
+    }
+  ],
+  "TotalDuration": 330,
+  "Prerequisites": {
+    "Software": [
+      "Python 3.12+",
+      "Azure CLI 2.60+",
+      "Terraform 1.5+",
+      "Azure Functions Core Tools v4",
+      "Git",
+      "Node.js 18+",
+      "Visual Studio Code with Python, Azure Functions, and REST Client extensions"
+    ],
+    "AzureServices": [
+      "Azure Content Understanding",
+      "Azure OpenAI Service (gpt-4o)",
+      "Azure Functions",
+      "Azure Cosmos DB (Mongo API + SQL API)",
+      "Azure Key Vault",
+      "Azure Storage Account",
+      "Azure Application Insights",
+      "Azure AI Foundry",
+      "Azure Log Analytics Workspace"
+    ]
+  }
+}
