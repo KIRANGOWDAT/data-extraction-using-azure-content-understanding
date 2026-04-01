@@ -1,6 +1,6 @@
-@AZURE_FUNCTIONS_ENDPOINT_DEV = "https://your-function-app.azurewebsites.net/api"
+@AZURE_FUNCTIONS_ENDPOINT_DEV = https://your-function-app.azurewebsites.net/api
 
-@AZURE_FUNCTIONS_ENDPOINT_LOCAL = "http://localhost:7071/api"
+@AZURE_FUNCTIONS_ENDPOINT_LOCAL = http://localhost:7071/api
 
 ### Send a request to the data extraction /health endpoint for dev
 # @name getHealthDev

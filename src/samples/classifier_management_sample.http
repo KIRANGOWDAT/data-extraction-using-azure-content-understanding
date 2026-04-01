@@ -1,7 +1,7 @@
-@AZURE_FUNCTIONS_ENDPOINT_DEV = "https://your-function-app.azurewebsites.net/api"
-@AZURE_FUNCTIONS_ENDPOINT_LOCAL = "http://localhost:7071/api"
+@AZURE_FUNCTIONS_ENDPOINT_DEV = https://your-function-app.azurewebsites.net/api
+@AZURE_FUNCTIONS_ENDPOINT_LOCAL = http://localhost:7071/api
 
-@CLASSIFIER_ID = "test-classifier"
+@CLASSIFIER_ID = test-classifier
 ### Send a request to the data extraction /classifiers endpoint for dev to create a classifier
 # @name putClassifierDev
 curl -i -X PUT "{{AZURE_FUNCTIONS_ENDPOINT_DEV}}/classifiers/{{CLASSIFIER_ID}}?x-ms-routing-name=dev" \
