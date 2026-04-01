@@ -165,6 +165,13 @@ function Clone-LabRepository {
         Write-Log "WARNING: Git not found at $gitPath. Retrying with PATH..."
         git clone "https://github.com/KIRANGOWDAT/data-extraction-using-azure-content-understanding.git" "$labFilesPath\data-extraction-using-azure-content-understanding"
     }
+
+    # Remove lab-provider internal folders that users should not see
+    $repoPath = "$labFilesPath\data-extraction-using-azure-content-understanding"
+    Remove-Item -Path "$repoPath\cloudlabs-setup" -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item -Path "$repoPath\labguide" -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item -Path "$repoPath\media" -Recurse -Force -ErrorAction SilentlyContinue
+    Write-Log "Removed internal lab-provider folders from cloned repo."
 }
 
 # ---------- Create Desktop Shortcuts ----------
