@@ -33,7 +33,7 @@ locals {
 
   # AI module variables
   machine_learning_workspace_name = "${local.resource_prefix}aml0"
-  aml_storage_account_name        = "${local.resource_prefix}sa0"
+  aml_storage_account_name        = "${local.resource_prefix}sa${random_string.name.result}"
   azureopenai_name                = "${local.resource_prefix}aoai0"
   ai_app_insights_name            = "${local.resource_prefix}appins0"
   aiservices_name                 = "${local.resource_prefix}ais0"
@@ -53,20 +53,13 @@ locals {
   # Search Index Data Contributor:  Load documents, run indexing jobs
   # Search Service Contributor : CRUD operations on Indexes
   # Cognitive Services OpenAI Contributor :Full access including the ability to fine-tune, deploy and generate text
-  ds_access_roles = [
-    "AzureML Data Scientist",
-    "AzureML Compute Operator",
-    "Storage Blob Data Contributor",
-    "Storage File Data Privileged Contributor",
-    "Search Index Data Contributor",
-    "Search Service Contributor",
-    "Cognitive Services OpenAI Contributor",
-    "Cognitive Services OpenAI User",
-    "Cognitive Services User"
-  ]
+  # Disabled: These role assignments require an Azure AD group which the user cannot create (403).
+  # The function app managed identity gets its own roles; the deploying user has direct role assignments.
+  ds_access_roles = []
 
   # Replace/Add the user object ids of the entra app or users to the group
-  ds_group_members = [data.azurerm_client_config.current.object_id]
+  # Disabled: user lacks Azure AD group creation permissions
+  ds_group_members = []
 }
 
 # Diagnostic settings
