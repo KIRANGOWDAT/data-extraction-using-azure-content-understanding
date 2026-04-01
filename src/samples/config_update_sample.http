@@ -5,17 +5,14 @@
 @CONFIG_VERSION = v1.0
 ### Send a request to the data extraction /config endpoint for dev
 # @name putConfigDev
-curl -i -X PUT "{{AZURE_FUNCTIONS_ENDPOINT_DEV}}/configs/{{CONFIG_NAME}}/versions/{{CONFIG_VERSION}}?x-ms-routing-name=dev" \
-  -H "Content-Type: application/json" \
-  -d @../../configs/document-extraction-v1.0.json
+PUT {{AZURE_FUNCTIONS_ENDPOINT_DEV}}/configs/{{CONFIG_NAME}}/versions/{{CONFIG_VERSION}}?x-ms-routing-name=dev HTTP/1.1
+Content-Type: application/json
 
-echo {{putConfigDev.response}}
-
+< ../../configs/document-extraction-v1.0.json
 
 ### Send a request to the data extraction /config endpoint local
 # @name putConfigLocal
-curl -i -X PUT "{{AZURE_FUNCTIONS_ENDPOINT_LOCAL}}/configs/{{CONFIG_NAME}}/versions/{{CONFIG_VERSION}}" \
-  -H "Content-Type: application/json" \
-  -d @../../configs/document-extraction-v1.0.json
+PUT {{AZURE_FUNCTIONS_ENDPOINT_LOCAL}}/configs/{{CONFIG_NAME}}/versions/{{CONFIG_VERSION}} HTTP/1.1
+Content-Type: application/json
 
-echo {{putConfigLocal.response}}
+< ../../configs/document-extraction-v1.0.json

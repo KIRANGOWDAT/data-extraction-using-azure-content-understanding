@@ -5,17 +5,14 @@
 @CONFIG_VERSION = v1.0
 ### Send a request to the data extraction /ingest-documents endpoint for dev
 # @name postDocumentDev
-curl -i -X POST "{{AZURE_FUNCTIONS_ENDPOINT_DEV}}/ingest-documents/Collection1/Lease1/TestDocument" \
-  -H "Content-Type: application/json" \
-  -d @../../document_samples/Agreement_for_leasing_or_renting_certain_Microsoft_Software_Products.pdf
+POST {{AZURE_FUNCTIONS_ENDPOINT_DEV}}/ingest-documents/Collection1/Lease1/TestDocument HTTP/1.1
+Content-Type: application/json
 
-echo {{postDocumentDev.response}}
-
+< ../../document_samples/Agreement_for_leasing_or_renting_certain_Microsoft_Software_Products.pdf
 
 ### Send a request to the data extraction /ingest-documents endpoint local
 # @name postDocumentLocal
-curl -i -X POST "{{AZURE_FUNCTIONS_ENDPOINT_LOCAL}}/ingest-documents/Collection1/Lease1/TestDocument" \
-  -H "Content-Type: application/octet-stream" \
-  -d @../../document_samples/Agreement_for_leasing_or_renting_certain_Microsoft_Software_Products.pdf
+POST {{AZURE_FUNCTIONS_ENDPOINT_LOCAL}}/ingest-documents/Collection1/Lease1/TestDocument HTTP/1.1
+Content-Type: application/octet-stream
 
-echo {{postDocumentLocal.response}}
+< ../../document_samples/Agreement_for_leasing_or_renting_certain_Microsoft_Software_Products.pdf

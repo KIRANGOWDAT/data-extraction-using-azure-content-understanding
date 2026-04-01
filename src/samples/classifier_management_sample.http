@@ -4,32 +4,24 @@
 @CLASSIFIER_ID = test-classifier
 ### Send a request to the data extraction /classifiers endpoint for dev to create a classifier
 # @name putClassifierDev
-curl -i -X PUT "{{AZURE_FUNCTIONS_ENDPOINT_DEV}}/classifiers/{{CLASSIFIER_ID}}?x-ms-routing-name=dev" \
-  -H "Content-Type: application/json" \
-  -d @../../configs/test-classifier.json
+PUT {{AZURE_FUNCTIONS_ENDPOINT_DEV}}/classifiers/{{CLASSIFIER_ID}}?x-ms-routing-name=dev HTTP/1.1
+Content-Type: application/json
 
-echo {{putClassifierDev.response}}
-
+< ../../configs/test-classifier.json
 
 ### Send a request to the data extraction /classifiers endpoint local to create a classifier
 # @name putClassifierLocal
-curl -i -X PUT "{{AZURE_FUNCTIONS_ENDPOINT_LOCAL}}/classifiers/{{CLASSIFIER_ID}}" \
-  -H "Content-Type: application/json" \
-  -d @../../configs/test-classifier.json
+PUT {{AZURE_FUNCTIONS_ENDPOINT_LOCAL}}/classifiers/{{CLASSIFIER_ID}} HTTP/1.1
+Content-Type: application/json
 
-echo {{putClassifierLocal.response}}
+< ../../configs/test-classifier.json
 
 ### Send a request to the data extraction /classifiers endpoint for dev to get a classifier
 # @name getClassifierDev
-curl -i -X GET "{{AZURE_FUNCTIONS_ENDPOINT_DEV}}/classifiers/{{CLASSIFIER_ID}}?x-ms-routing-name=dev" \
-  -H "Content-Type: application/json"
-
-echo {{getClassifierDev.response}}
-
+GET {{AZURE_FUNCTIONS_ENDPOINT_DEV}}/classifiers/{{CLASSIFIER_ID}}?x-ms-routing-name=dev HTTP/1.1
+Content-Type: application/json
 
 ### Send a request to the data extraction /classifiers endpoint local to get a classifier
 # @name getClassifierLocal
-curl -i -X GET "{{AZURE_FUNCTIONS_ENDPOINT_LOCAL}}/classifiers/{{CLASSIFIER_ID}}" \
-  -H "Content-Type: application/json"
-
-echo {{getClassifierLocal.response}}
+GET {{AZURE_FUNCTIONS_ENDPOINT_LOCAL}}/classifiers/{{CLASSIFIER_ID}} HTTP/1.1
+Content-Type: application/json

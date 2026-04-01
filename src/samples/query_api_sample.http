@@ -3,27 +3,24 @@
 
 ### Send a request to the data extraction /query endpoint for dev
 # @name postQueryDev
-curl -i -X POST "{{AZURE_FUNCTIONS_ENDPOINT_DEV}}/v1/query?x-ms-routing-name=dev" \
-  -H "Content-Type: application/json" \
-  -H "x-user: user@microsoft.com" \
-  -d '{
-        "cid": "col1",
-        "sid": "test",
-        "query": "Get the data for Collection1"
-      }'
+POST {{AZURE_FUNCTIONS_ENDPOINT_DEV}}/v1/query?x-ms-routing-name=dev HTTP/1.1
+Content-Type: application/json
+x-user: user@microsoft.com
 
-echo {{postQueryDev.response}}
-
+{
+  "cid": "col1",
+  "sid": "test",
+  "query": "Get the data for Collection1"
+}
 
 ### Send a request to the data extraction /query endpoint local
 # @name postQueryLocal
-curl -i -X POST "{{AZURE_FUNCTIONS_ENDPOINT_LOCAL}}/v1/query" \
-  -H "Content-Type: application/json" \
-  -H "x-user: user@microsoft.com" \
-  -d '{
-        "cid": "col12",
-        "sid": "test2",
-        "query": "What are my termination conditions on Collection1"
-      }'
+POST {{AZURE_FUNCTIONS_ENDPOINT_LOCAL}}/v1/query HTTP/1.1
+Content-Type: application/json
+x-user: user@microsoft.com
 
-echo {{postQueryLocal.response}}
+{
+  "cid": "col12",
+  "sid": "test2",
+  "query": "What are my termination conditions on Collection1"
+}
