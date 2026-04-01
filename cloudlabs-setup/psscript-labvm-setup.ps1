@@ -145,6 +145,12 @@ function Install-DotNet {
     Write-Log ".NET 8.0 SDK installed."
 }
 
+function Install-WindowsTerminal {
+    Write-Log "Installing Windows Terminal..."
+    choco install microsoft-windows-terminal -y
+    Write-Log "Windows Terminal installed."
+}
+
 # ---------- Clone Repository ----------
 
 function Clone-LabRepository {
@@ -206,8 +212,12 @@ function Create-DesktopShortcuts {
     $shortcut3.Save()
 
     # Windows Terminal shortcut
+    $wtPath = Join-Path $env:LOCALAPPDATA "Microsoft\WindowsApps\wt.exe"
+    if (-not (Test-Path $wtPath)) {
+        $wtPath = "C:\Users\$AdminUsername\AppData\Local\Microsoft\WindowsApps\wt.exe"
+    }
     $shortcut4 = $WshShell.CreateShortcut("$desktopPath\Windows Terminal.lnk")
-    $shortcut4.TargetPath = "wt.exe"
+    $shortcut4.TargetPath = $wtPath
     $shortcut4.Save()
 
     Write-Log "Desktop shortcuts created."
@@ -317,6 +327,7 @@ Install-NodeJS
 Install-AzureFunctionsCoreTools
 Install-VSCode
 Install-DotNet
+Install-WindowsTerminal
 
 # Clone Repository
 Clone-LabRepository
