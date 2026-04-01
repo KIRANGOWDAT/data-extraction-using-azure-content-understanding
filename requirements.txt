@@ -1,0 +1,19 @@
+# Core Python packages
+requests>=2.31.0
+python-dotenv>=1.0.0
+
+# Azure SDK packages
+azure-monitor-opentelemetry==1.6.7
+azure-functions==1.23.0
+azure-keyvault-secrets==4.9.0
+azure-storage-blob~=12.24.0
+azure-identity~=1.19.0
+azure-ai-documentintelligence==1.0.0
+
+# Additional packages
+cryptography==44.0.1
+semantic-kernel==1.22.0
+semantic-kernel[azure]==1.22.0
+pymongo==3.12.3
+pyyaml==6.0.2
+cachetools==6.1.0
