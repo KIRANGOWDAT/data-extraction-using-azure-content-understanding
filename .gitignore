@@ -576,3 +576,7 @@ terraform.rc
 src/analyzer_cache/*
 
 .DS_Store
+# Lab guide files (moved to separate repo)
+labguide/
+media/
+cloudlabs-setup/
