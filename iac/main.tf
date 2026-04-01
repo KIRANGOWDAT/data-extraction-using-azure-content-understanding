@@ -1,7 +1,6 @@
-# Create a resource group
-resource "azurerm_resource_group" "this" {
-  location = var.resource_group_location
-  name     = local.resource_group_name
+# Use existing resource group (user has RG-level access only, cannot create new RGs)
+data "azurerm_resource_group" "this" {
+  name = var.existing_resource_group_name
 }
 
 # Create a random string for the resource name
@@ -24,17 +23,17 @@ data "azurerm_client_config" "current" {}
 # customer managed key encryption
 resource "azurerm_user_assigned_identity" "cmk" {
   count               = var.use_customer_managed_key_encryption ? 1 : 0
-  location            = azurerm_resource_group.this.location
+  location            = var.resource_group_location
   name                = module.naming.user_assigned_identity.name
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = data.azurerm_resource_group.this.name
 }
 
 module "cmk_key_vault" {
   source              = "Azure/avm-res-keyvault-vault/azurerm"
   version             = "0.10.0"
-  location            = azurerm_resource_group.this.location
+  location            = var.resource_group_location
   name                = local.key_vault_name
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = data.azurerm_resource_group.this.name
   tenant_id           = data.azurerm_client_config.current.tenant_id
   network_acls = {
     default_action = "Allow"
@@ -85,8 +84,8 @@ resource "azurerm_key_vault_key" "cmk" {
 module "log_analytics_workspace" {
   source                                         = "./modules/loganalytics"
   name                                           = module.naming.log_analytics_workspace.name
-  location                                       = azurerm_resource_group.this.location
-  resource_group_name                            = azurerm_resource_group.this.name
+  location                                       = var.resource_group_location
+  resource_group_name                            = data.azurerm_resource_group.this.name
   tags                                           = local.tags
   enable_telemetry                               = var.enable_telemetry
   log_analytics_workspace_cmk_for_query_forced   = var.use_customer_managed_key_encryption ? true : false
@@ -96,8 +95,8 @@ module "log_analytics_workspace" {
 module "key_vault" {
   source              = "./modules/keyvault"
   name                = local.key_vault_name
-  location            = azurerm_resource_group.this.location
-  resource_group_name = azurerm_resource_group.this.name
+  location            = var.resource_group_location
+  resource_group_name = data.azurerm_resource_group.this.name
   tenant_id           = data.azurerm_client_config.current.tenant_id
   enable_telemetry    = var.enable_telemetry
   diagnostic_settings = local.diagnostic_settings
@@ -117,10 +116,10 @@ module "key_vault" {
 
 module "ai" {
   source                              = "./modules/ai"
-  location                            = azurerm_resource_group.this.location
+  location                            = var.resource_group_location
   name                                = lower(local.resource_prefix)
   kind                                = "Hub"
-  resource_group_name                 = azurerm_resource_group.this.name
+  resource_group_name                 = data.azurerm_resource_group.this.name
   container_registry_name             = null
   container_registry_resource_id      = null
   key_vault_name                      = module.key_vault.output.name
@@ -166,8 +165,8 @@ module "ai" {
 module "cosmosdb" {
   source = "./modules/cosmos_db"
 
-  resource_group_name                     = azurerm_resource_group.this.name
-  location                                = azurerm_resource_group.this.location
+  resource_group_name                     = data.azurerm_resource_group.this.name
+  location                                = var.resource_group_location
   name                                    = local.cosmosdb_name
   analytical_storage_enabled              = true
   public_network_access_enabled           = true
@@ -176,7 +175,7 @@ module "cosmosdb" {
 
   geo_locations = [
     {
-      location          = azurerm_resource_group.this.location
+      location          = var.resource_group_location
       failover_priority = 0
       zone_redundant    = false
     }
@@ -222,8 +221,8 @@ module "cosmosdb" {
 module "cosmosdb_knowledge_base" {
   source = "./modules/cosmos_db"
 
-  resource_group_name                     = azurerm_resource_group.this.name
-  location                                = azurerm_resource_group.this.location
+  resource_group_name                     = data.azurerm_resource_group.this.name
+  location                                = var.resource_group_location
   name                                    = local.cosmosdb_knowledge_base_name
   analytical_storage_enabled              = true
   public_network_access_enabled           = true
@@ -231,7 +230,7 @@ module "cosmosdb_knowledge_base" {
 
   geo_locations = [
     {
-      location          = azurerm_resource_group.this.location
+      location          = var.resource_group_location
       failover_priority = 0
       zone_redundant    = false
     }
@@ -276,10 +275,10 @@ module "cosmosdb_knowledge_base" {
 
 module "app_service" {
   source              = "./modules/function_app"
-  location            = azurerm_resource_group.this.location
+  location            = var.resource_group_location
   app_name            = local.function_app_name
   env                 = var.environment_name
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = data.azurerm_resource_group.this.name
   tags                = local.tags
 
   # App Service configuration
@@ -347,7 +346,7 @@ module "app_service" {
 # Add this data source to get the storage account key
 data "azurerm_storage_account" "ai_storage" {
   name                = module.ai.output.storage_account.name
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = data.azurerm_resource_group.this.name
   depends_on          = [module.ai.output]
 }
 
@@ -355,18 +354,18 @@ data "azurerm_storage_account" "ai_storage" {
 
 # Current user SQL Role assignment for Knowledge Base CosmosDB (SQL API)
 resource "azurerm_cosmosdb_sql_role_assignment" "current_user_cosmosdb_sql" {
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = data.azurerm_resource_group.this.name
   account_name        = module.cosmosdb_knowledge_base.output.name
-  role_definition_id  = "/subscriptions/${var.subscription_id}/resourceGroups/${azurerm_resource_group.this.name}/providers/Microsoft.DocumentDB/databaseAccounts/${module.cosmosdb_knowledge_base.output.name}/sqlRoleDefinitions/00000000-0000-0000-0000-000000000002" # Cosmos DB Built-in Data Contributor
+  role_definition_id  = "/subscriptions/${var.subscription_id}/resourceGroups/${data.azurerm_resource_group.this.name}/providers/Microsoft.DocumentDB/databaseAccounts/${module.cosmosdb_knowledge_base.output.name}/sqlRoleDefinitions/00000000-0000-0000-0000-000000000002" # Cosmos DB Built-in Data Contributor
   principal_id        = data.azurerm_client_config.current.object_id
   scope               = module.cosmosdb_knowledge_base.output.resource_id
 }
 
 # Function App SQL Role assignment for Knowledge Base CosmosDB (SQL API)
 resource "azurerm_cosmosdb_sql_role_assignment" "function_app_cosmosdb_sql" {
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = data.azurerm_resource_group.this.name
   account_name        = module.cosmosdb_knowledge_base.output.name
-  role_definition_id  = "/subscriptions/${var.subscription_id}/resourceGroups/${azurerm_resource_group.this.name}/providers/Microsoft.DocumentDB/databaseAccounts/${module.cosmosdb_knowledge_base.output.name}/sqlRoleDefinitions/00000000-0000-0000-0000-000000000002" # Cosmos DB Built-in Data Contributor
+  role_definition_id  = "/subscriptions/${var.subscription_id}/resourceGroups/${data.azurerm_resource_group.this.name}/providers/Microsoft.DocumentDB/databaseAccounts/${module.cosmosdb_knowledge_base.output.name}/sqlRoleDefinitions/00000000-0000-0000-0000-000000000002" # Cosmos DB Built-in Data Contributor
   principal_id        = module.app_service.app_service_identity_principal_id
   scope               = module.cosmosdb_knowledge_base.output.resource_id
 }
