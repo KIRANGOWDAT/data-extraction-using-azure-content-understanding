@@ -205,6 +205,11 @@ function Create-DesktopShortcuts {
     $shortcut3.TargetPath = "https://portal.azure.com"
     $shortcut3.Save()
 
+    # Windows Terminal shortcut
+    $shortcut4 = $WshShell.CreateShortcut("$desktopPath\Windows Terminal.lnk")
+    $shortcut4.TargetPath = "wt.exe"
+    $shortcut4.Save()
+
     Write-Log "Desktop shortcuts created."
 }
 
