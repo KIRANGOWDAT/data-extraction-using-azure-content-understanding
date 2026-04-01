@@ -130,6 +130,7 @@ function Install-VSCode {
         & $codePath --install-extension ms-python.vscode-pylance --force
         & $codePath --install-extension hashicorp.terraform --force
         & $codePath --install-extension ms-vscode.azure-account --force
+        & $codePath --install-extension tomoki1207.pdf --force
         Write-Log "VS Code extensions installed."
     }
     else {
