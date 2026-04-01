@@ -23,7 +23,8 @@ terraform {
 }
 
 provider "azurerm" {
-  storage_use_azuread = true
+  storage_use_azuread            = true
+  resource_provider_registrations = "none"
   features {
     key_vault {
       recover_soft_deleted_key_vaults    = false
