@@ -31,14 +31,15 @@ In this task, you will sign in to Azure CLI and select the correct subscription 
    az login
    ```
 
-   A browser window will open. Sign in with your Azure credentials:
+   A browser window will open. Sign in with your Azure credentials.
 
-   - **Email/Username:** <inject key="AzureAdUserEmail"></inject>
-   - **Password:** <inject key="AzureAdUserPassword"></inject>
+   >**Note:** If you encounter a multi-factor authentication (MFA) error, use `az login --tenant <your-tenant-id>` instead. You can find the tenant ID from the error message.
 
    ![](../media/Lab-02/image03.png)
 
-1. After successful authentication, list all available subscriptions:
+1. After successful authentication, you will see a list of subscriptions. Select the subscription you want to use for this lab when prompted.
+
+   If you are not prompted, list all available subscriptions:
 
    ```
    az account list --output table
@@ -46,10 +47,10 @@ In this task, you will sign in to Azure CLI and select the correct subscription 
 
    ![](../media/Lab-02/image04.png)
 
-1. Set the correct subscription for this lab:
+1. Set the correct subscription for this lab (replace `<your-subscription-id>` with the actual Subscription ID from the table above):
 
    ```
-   az account set --subscription "<inject key="AzureSubscriptionId"></inject>"
+   az account set --subscription "<your-subscription-id>"
    ```
 
 1. Verify the selected subscription:
@@ -86,11 +87,13 @@ In this task, you will configure the Terraform variables that control resource n
    code terraform.tfvars
    ```
 
-1. Update the variables with the following values:
+1. The file will open in VS Code. Replace the placeholder values with the following:
+
+   >**Important:** Edit this file **inside VS Code**, not in the terminal. Do not copy-paste these lines into PowerShell.
 
    ```hcl
    # Azure subscription ID where resources will be deployed
-   subscription_id = "<inject key="AzureSubscriptionId"></inject>"
+   subscription_id = "<your-subscription-id>"
 
    # Azure region for resource deployment
    resource_group_location = "westus"
@@ -104,6 +107,8 @@ In this task, you will configure the Terraform variables that control resource n
    # Use case name for resource naming
    usecase_name = "dataext"
    ```
+
+   Replace `<your-subscription-id>` with your actual Azure Subscription ID (the one you selected in Task 1, Step 4). You can get it by running `az account show --query id -o tsv` in the terminal.
 
    ![](../media/Lab-02/image07.png)
 
@@ -177,10 +182,9 @@ In this task, you will initialize Terraform, review the deployment plan, and app
 
 In this task, you will navigate to the Azure Portal and verify that all resources were created successfully.
 
-1. Open a web browser and navigate to **https://portal.azure.com**. Sign in with your lab credentials if not already authenticated:
+1. Open a web browser and navigate to **https://portal.azure.com**. Sign in with your lab credentials if not already authenticated.
 
-   - **Email/Username:** <inject key="AzureAdUserEmail"></inject>
-   - **Password:** <inject key="AzureAdUserPassword"></inject>
+   >**Note:** Use the same Azure credentials you used to log in with `az login` in Task 1.
 
 1. In the Azure Portal, search for **Resource groups** **(1)** in the top search bar and select **Resource groups** **(2)**.
 
