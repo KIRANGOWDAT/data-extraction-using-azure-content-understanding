@@ -2,8 +2,8 @@
     "id": "document-extraction-v1.0",
     "name": "document-extraction",
     "version": "v1.0",
-    "prompt": "You are a helpful assistant tasked with using the necessary tools to retrieve document information based on the collection ID provided by the user. P
-    "extraction_config_hash": "<hash>",
+    "prompt": "You are a helpful assistant tasked with using the necessary tools to retrieve document information based on the collection ID provided by the user. Please use the available tools to find and return the relevant data.",
+    "extraction_config_hash": "",
     "collection_rows": [
         {
             "data_type": "LeaseAgreement",
