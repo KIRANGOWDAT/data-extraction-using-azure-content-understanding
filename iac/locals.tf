@@ -29,7 +29,7 @@ locals {
   cosmosdb_knowledge_base_name = lower("${local.resource_prefix}cosmoskb0")
 
   # Function App name
-  function_app_name = lower("${local.resource_prefix}func0")
+  function_app_name = lower("${local.resource_prefix}func${random_string.name.result}")
 
   # AI module variables
   machine_learning_workspace_name = "${local.resource_prefix}aml0"
