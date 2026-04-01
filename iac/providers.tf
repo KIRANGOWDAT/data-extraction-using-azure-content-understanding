@@ -45,5 +45,4 @@ provider "azuread" {
 
 provider "azapi" {
   partner_id = var.enable_telemetry ? "acce1e78-24be-4ea5-93c6-0f400bc653e1" : null
-  enable_resource_provider_registration = false
 }
